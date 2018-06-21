@@ -6,7 +6,7 @@
       </el-col>
     </el-row>
     <el-row class="icon_panel">
-      <div class="icon_panel_item" v-for="(item,index) in featureData.data" :key="index">
+      <div class="icon_panel_item" :style="'width:'+featureData.width+';'" v-for="(item,index) in featureData.data" :key="index">
         <div class="grid-content">
           <img class='activeimg' :src='item.img'/>
           <p>{{ item.name }}</p>
@@ -33,12 +33,15 @@
 <style rel="stylesheet/scss" lang="scss" scoped>
    .feature_panel {
     .icon_panel{
-      display: flex;
-      justify-content: space-around;
+      // display: flex;
+      // justify-content: space-around;
+      .grid-content {
+        width: 100%;
+      }
       .icon_panel_item {
-        position: relative;
-        width: 16.7%;
         text-align: center;
+        display: inline-flex;
+        padding: 12px;
         p{
           word-break: break-all;
         }

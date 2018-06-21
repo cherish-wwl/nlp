@@ -5,7 +5,7 @@
     </el-row>
     <el-row class="display_panel">
    
-      <el-col :span="6" class="item" v-for="(item,index) in cooperationData" :key="index">
+      <el-col :span="cooperationData.col" class="item" v-for="(item,index) in cooperationData.data" :key="index">
          <img  :src='item'/>
       </el-col>
       

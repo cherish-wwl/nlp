@@ -1,63 +1,52 @@
 <template>
-  <div class="xiaoniu-container">
+  <div class="datagrand-container">
     <xiao-niu-banner :title-data="titleData"></xiao-niu-banner>
     <service-feature :feature-data="featureData"></service-feature>
     <br />
     <property-index :feature-data="propertyData"></property-index> 
     <br />
-    <service-mode :table-data="tableData"></service-mode>
-    <br />
-    <specialist :specialist="specialist"></specialist>
-    <br />
+    <industry-solution :show-data="industryData"></industry-solution>
     <cooperation-platform :cooperation-data="cooperationData"></cooperation-platform>
-    <br />
-    <contact></contact>
-
-
+    
   </div>
 </template>
 
 <script>
 import { xiaoNiuBanner, ServiceFeature,
- PropertyIndex, ServiceMode, Specialist ,
- CooperationPlatform, Contact} from '@/views/solution/components'
+ PropertyIndex,  CooperationPlatform, IndustrySolution} from '@/views/solution/components'
 
-import { getXiaoNiuData } from '@/api/localData.js'
+import { getDataGrand } from '@/api/localData.js'
 export default {
   components:{
     xiaoNiuBanner,
     ServiceFeature,
     PropertyIndex,
-    ServiceMode,
-    Specialist,
     CooperationPlatform,
-    Contact
+    IndustrySolution
   },
   data(){
     return{
       titleData:{},
       featureData:{},
       propertyData:{},
-      tableData:{},
-      specialist:{},
+      industryData:{},
       cooperationData:{}
     }
-   
   },mounted(){
-    getXiaoNiuData().then( res=>{
+    getDataGrand().then( res=>{
       console.log(res)
       if((typeof res) == "object"){
         this.titleData = res.titleData
         this.featureData = res.featureData
         this.propertyData = res.propertyData
-        this.tableData = res.tableData
-        this.specialist = res.specialist
+        this.industryData = res.industryData
         this.cooperationData = res.cooperationData
       }else{
         console.log("未加载到数据")
       }
-        
+      
     })
+    
   }
   
 }

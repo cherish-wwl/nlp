@@ -108,7 +108,13 @@ export const constantRouterMap = [
         path:"xiaoniu/:id",
         name:"xiaoniu",
         component:() =>import('@/views/solution/xiaoniu/index'),
-        meta: { title: '模板' }
+        meta: { title: '小牛翻译' }
+      },
+      {
+        path:"datagrand",
+        name:"datagrand",
+        component:() =>import('@/views/solution/datagrand/index'),
+        meta: { title: '达观数据' }
       }
     ]
   },

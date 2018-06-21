@@ -15,8 +15,8 @@
                     <svg-icon icon-class="kefu"></svg-icon>
                   </el-col>
                   <el-col :span='20'>
-                    <span class="font14 lineHeight40" >在线客服</span>
-								    <!-- <span class="font16">010-57973555</span> -->
+                    <span class="font14" >在线客服</span>
+								    <span class="font16">工作日：9:00-18:00</span>
                   </el-col>
                 </el-row>			
               </li>

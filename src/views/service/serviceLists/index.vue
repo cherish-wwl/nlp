@@ -52,7 +52,7 @@
         <el-row class='service_list' >
             <el-row class='item' v-for="item in thridList" :key='item.id'>
               <el-col :span='8' class='item_img' style="width:330px;"> 
-                <img :src=" item.serviceIcon | getImage" onerror="this.src='/static/default.png'" />
+                <img :src=" item.serviceIcon" onerror="this.src='/static/default.png'" />
               </el-col>
               <el-col :span='16' class='item_info'>
                 <h3>

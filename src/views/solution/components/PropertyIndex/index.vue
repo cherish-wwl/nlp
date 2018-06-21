@@ -1,19 +1,19 @@
 <template>
    <el-container class='property_panel container_80'>
     <el-row>
-      <el-col :span="24" class='text_center'>
+      <el-col :span="24" class='text_center' >
         <h2 class="temp_title">{{ featureData.name }}</h2>     
       </el-col>
     </el-row>
     <el-row class="icon_panel">
-      <div class="icon_panel_item" v-for="(item,index) in featureData.data" :key="index">
+      <div class="icon_panel_item" :style="'width:'+featureData.width+';'" v-for="(item,index) in featureData.data" :key="index">
         <div class="grid-content">
           <div class="up_panel">
             <img class='activeimg' :src="item.img"/>
-            <div class="item_name">{{ item.name }}</div>
+            <div class="item_name" v-if="item.name && item.name !=''" >{{ item.name }}</div>
           </div>
           <div class="down_panel">
-            
+            <div v-if="item.title && item.title !=''">{{ item.title }}</div>     
             <p class="smaller font_color_grey">
               {{ item.descr }}
             </p>
@@ -44,7 +44,7 @@
        
         .icon_panel_item {
           position: relative;
-          max-width: 30%;
+          // max-width: 30%;
           background-color: #fff;
           cursor: pointer;
           &:hover{
@@ -69,7 +69,7 @@
             }
           }
           .down_panel{
-            padding: 5px 25px;
+            padding: 12px 25px;
             p{
               line-height: 23px;
             }
