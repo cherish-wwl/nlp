@@ -105,7 +105,7 @@ export const constantRouterMap = [
     // redirct:'/solution/template',
     children:[
       {
-        path:"xiaoniu/:id",
+        path:"xiaoniu",
         name:"xiaoniu",
         component:() =>import('@/views/solution/xiaoniu/index'),
         meta: { title: '小牛翻译' }

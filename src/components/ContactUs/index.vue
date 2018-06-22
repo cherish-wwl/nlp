@@ -15,8 +15,8 @@
                     <svg-icon icon-class="kefu"></svg-icon>
                   </el-col>
                   <el-col :span='20'>
-                    <span class="font14" >在线客服</span>
-								    <span class="font16">工作日：9:00-18:00</span>
+                    <span class="font16" >在线客服</span>
+								    <span class="font16">9:00-18:00&nbsp;(工作日)</span>
                   </el-col>
                 </el-row>			
               </li>
@@ -26,7 +26,7 @@
                     <svg-icon icon-class="phone"></svg-icon>
                   </el-col>
                   <el-col :span='20'>
-                    <span class="font14">咨询电话：</span>
+                    <span class="font16">咨询电话：</span>
 								    <span class="font16">010-57973555</span>
                   </el-col>
                 </el-row>						
@@ -37,7 +37,7 @@
                     <i class="fa fa-envelope-o fa-fw"></i>
                   </el-col>
                   <el-col :span='20'>
-                    <span class="font14" >邮箱地址：</span>
+                    <span class="font16" >邮箱地址：</span>
 								    <span class="font16 nowrap">China-NLP@ultrapower.com.cn</span>
                   </el-col>
                 </el-row>									
@@ -162,6 +162,7 @@ export default {
       &:hover{
         .floating_left {
           display: block;
+          border: 1px solid #000;
           -webkit-box-shadow: 3px -3px 10px -7px rgba(0, 0, 0, 0.2) inset;
           box-shadow: 3px -3px 10px -7px rgba(0, 0, 0, 0.2) inset;
         }
@@ -189,7 +190,7 @@ export default {
         }
         i, .svg-icon{
           font-size: 23px;
-          color: #c2c2c2;
+          color: #000;
           margin-top: 11px;
         }
         span {
@@ -198,7 +199,8 @@ export default {
           font-weight: 500;
         }
         span:first-child{
-          color: #666;
+          color: #000;
+          line-height: 27px;
           font-weight: normal;
         }
        

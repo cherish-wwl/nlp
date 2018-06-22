@@ -10,7 +10,7 @@ export function scrollAnimation(className,scrollheight) {
     total = jump[0].offsetTop
     distance = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
     // 平滑滚动，时长500ms，每10ms一跳，共50跳
-    console.log(distance)
+    // console.log(distance)
     step = total / 50
  
     if (total > distance) {

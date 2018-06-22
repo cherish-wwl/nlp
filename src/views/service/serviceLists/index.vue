@@ -70,7 +70,7 @@
                 </p>
                 <div>
                   <!-- <el-button type="primary" class="font14 custom_button_blue">立即使用</el-button> -->
-                  <el-button  class="font16" @click="seeDetailPage(item.id,item.forwardType,item.url)">
+                  <el-button  class="font16" @click="seeDetailPage(item)">
                     查看详情
                   </el-button>
                 </div>
@@ -298,17 +298,17 @@ export default {
       }
     },
     // 跳转到详情页
-    seeDetailPage (id,forwardType,url) {
+    seeDetailPage (item) {
       // 跳转到详情页
       console.log("---------------跳转到详情页--------------------")
-      console.log("id:"+id)
-      if(forwardType == "014002"){//小牛-详情介绍页
-        this.$router.push({path:'/solution/xiaoniu/5'})
-      }else if(forwardType == "014003"){//跳转外部url
-        window.open(url,'_blank')
+      console.log("id:"+item.id)
+      if(item.forwardType == "014002"){//小牛-详情介绍页
+        this.$router.push({name:item.innerUrl})
+      }else if(item.forwardType == "014003"){//跳转外部url
+        window.open(item.innerUrl,'_blank')
         return
       }else{//通用详情页
-        this.$router.push({name:'serviceDetail',params:{'service_id':id}})
+        this.$router.push({name:'serviceDetail',params:{'service_id':item.id}})
       }
     },
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        

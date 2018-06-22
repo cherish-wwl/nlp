@@ -15,7 +15,7 @@
     </el-row>
     <el-row class='font_panel'>
       <div class='font_panel_item' v-for="item in list2" :key='item.id'>
-        <label class="font18">
+        <label class="font18 classhover" @click="linkServiceListPage(item.id)">
           <i class="fa fa-angle-double-down" aria-hidden="true"></i> 
           {{ item.name }}
         </label>
@@ -25,7 +25,7 @@
         <ul>
           <li v-for="child in item.children" class="font16" 
           :key='child.id' 
-          @click="linkServiceListPage(child.class_id)">{{ child.serviceName }}</li>
+          @click="linkServiceDetialPage(child)">{{ child.serviceName }}</li>
         </ul>
       </div>      
     </el-row>
@@ -76,6 +76,17 @@
         getpopularSubServicesList ({ "id": this.icon_panel_index,"size": 3 }).then(response => {
             this.list2 = response.data
         })
+      },
+      linkServiceDetialPage(item){
+        console.log(item)
+        if(item.forwardType == "014002"){//小牛-详情介绍页
+          this.$router.push({name:item.innerUrl})
+        }else if(item.forwardType == "014003"){//跳转外部url
+          window.open(item.innerUrl,'_blank')
+          return
+        }else{//通用详情页
+          this.$router.push({name:'serviceDetail',params:{'service_id':item.id}})
+        }
       },
       linkServiceListPage (id) {
         Cookies.set("service_id",id)
@@ -146,6 +157,12 @@ $fontColor:rgba(255, 255, 255, 0.6);
           margin-bottom: 20px;
           label i, p{
             color:rgba(51,51,51,0.6);
+          }
+          .classhover:hover{
+            cursor: pointer;
+            &,& i{
+              color:#1393ed ;
+            }
           }
         }
         .font_panel_item:not(:first-child){
