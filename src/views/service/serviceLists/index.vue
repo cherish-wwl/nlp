@@ -1,7 +1,7 @@
 <template>
   <div class="serviceLists-container">
     <el-row class='service_info'>
-      <img class='service_bg_img' v-bind:src='service_bg_img'/>
+      <img class='service_bg_img' :src="service_bg_img" onerror="this.src='/static/sevice_banner_default.jpg';return false;" />
       <div class='title_desc'>
         <h1> {{ serviceInfo.service_title }} </h1>
         <p> {{ serviceInfo.service_desc }} </p>
@@ -52,7 +52,7 @@
         <el-row class='service_list' >
             <el-row class='item' v-for="item in thridList" :key='item.id'>
               <el-col :span='8' class='item_img' style="width:330px;"> 
-                <img :src=" item.serviceIcon" onerror="this.src='/static/default.png'" />
+                <img :src=" item.serviceIcon" onerror="this.src='/static/default.png';return false;" />
               </el-col>
               <el-col :span='16' class='item_info'>
                 <h3>
@@ -101,7 +101,7 @@ import Cookies from 'js-cookie'
 export default {
   data (){
     return {
-      service_bg_img:require("../../../assets/sevice_details/u536.jpg"),
+      service_bg_img:'',
       activeNames:['1'],
       collapseData:[],
       search_key:'',
@@ -197,7 +197,7 @@ export default {
       this.refrushThridList ()
       // 更换页面背景图片
       if (child.img != "null" && child.img && child.img != null){
-        this.service_bg_img ="/static/services/service_list/"+child.img
+        this.service_bg_img = child.img
       }
       
     },
@@ -232,11 +232,11 @@ export default {
               if(this.currentServiceId.length <= "6"){
                 // 当前服务id 不正确  默认加载第一条数据
                 this.currentServiceId = this.collapseData[j].children[0].id
-                this.service_bg_img = "/static/services/service_list/"+this.collapseData[j].children[0].img
+                this.service_bg_img = this.collapseData[j].children[0].img
               }else{
                 for(var c = 0; c<this.collapseData[j].children.length;c++){
                   if(this.collapseData[j].children[c].id == this.currentServiceId){
-                    this.service_bg_img = "/static/services/service_list/"+this.collapseData[j].children[c].img
+                    this.service_bg_img = this.collapseData[j].children[c].img
                   }
                 }
               }
@@ -302,9 +302,9 @@ export default {
       // 跳转到详情页
       console.log("---------------跳转到详情页--------------------")
       console.log("id:"+item.id)
-      if(item.forwardType == "014002"){//小牛-详情介绍页
+      if(item.forwardType == "017002"){//定制详情页面
         this.$router.push({name:item.innerUrl})
-      }else if(item.forwardType == "014003"){//跳转外部url
+      }else if(item.forwardType == "017003"){//跳转外部url
         window.open(item.innerUrl,'_blank')
         return
       }else{//通用详情页

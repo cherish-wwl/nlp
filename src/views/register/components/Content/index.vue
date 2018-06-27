@@ -3,26 +3,29 @@
     <el-form autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left" label-width="0px"
       class="card-box login-form">
       <h3 class="title">欢迎注册</h3>
-      <el-form-item prop="username">
-        <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="用户名（6-20位数字字母）" />
+      <el-form-item prop="userName">
+        <el-input name="userName" type="text" v-model="loginForm.userName" autoComplete="on" placeholder="请输入用户名" />
       </el-form-item>
-      <el-form-item prop="password">
-        <el-input name="password" :type="pwdType" v-model="loginForm.password" autoComplete="on"
+      <el-form-item prop="email">
+        <el-input name="email" type="text" v-model="loginForm.email" autoComplete="on" placeholder="请输入邮箱地址" />
+      </el-form-item>
+      <el-form-item prop="pass">
+        <el-input name="password" :type="pwdType" v-model="loginForm.pass" autoComplete="on"
           placeholder="输入密码"></el-input>
-          <span class="show-pwd" @click="showPwd"><svg-icon icon-class="eye" /></span>
+          <span class="show-pwd" @click="showPwd(0)"> 
+            <svg-icon v-if="pwdType == ''" icon-class="eye" />
+            <i v-else class="el-icon-view"></i>
+          </span>
       </el-form-item>
-      <el-form-item prop="repassword">
-        <el-input name="repassword" :type="pwdType" v-model="loginForm.repassword" autoComplete="on" placeholder="再次输入密码"></el-input>
-        <span class="show-pwd" @click="showPwd"><svg-icon icon-class="eye" /></span>
+      <el-form-item prop="repass">
+        <el-input name="repassword" :type="rePwdType" v-model="loginForm.repass" autoComplete="on" placeholder="再次输入密码"></el-input>
+        <span class="show-pwd" @click="showPwd(1)">
+          <svg-icon v-if="rePwdType == ''" icon-class="eye" />
+          <i v-else class="el-icon-view"></i>
+        </span>
       </el-form-item>
-      <el-form-item prop="phone">
-        <el-input name="phone" type="text" v-model="loginForm.phone" placeholder="手机号码" autoComplete="on"></el-input>
-      </el-form-item>
-      <el-form-item prop="verificationCode">
-        <el-input name="verificationCode" type="text" v-model="loginForm.verificationCode" @keyup.enter.native="handleLogin"  placeholder="验证码" autoComplete="on">
-         <template slot="append" v-if="!verifiy" ><span @click="getVerificationCode" style="cursor:pointer;">获取验证码</span></template>
-         <template slot="append" v-if="verifiy">{{ countDownValue }}s</template>
-        </el-input>
+      <el-form-item prop="tel">
+        <el-input name="phone" type="text" v-model="loginForm.tel" placeholder="手机号码" autoComplete="on"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
@@ -39,7 +42,7 @@
 
 <script>
 import { isvalidUsername , isPhoneAvailable} from '@/utils/validate'
-
+import { registerUser, checkedEmail } from "@/api/login"
 export default {
   
   data() {
@@ -50,19 +53,10 @@ export default {
         callback()
       }
     }
-    const validatePass = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error('密码不能小于5位'))
-      } else if(value !==this.loginForm.repassword){
-        callback(new Error('两次密码输入不一致'))
-      } else {
-        callback()
-      }
-    }
     const validateRePass = (rule, value, callback) => {  
-      if (value.length < 5) {
-        callback(new Error('密码不能小于5位'))
-      } else if(value !==this.loginForm.password){
+      if (value == '') {
+        callback(new Error('请输入密码'))
+      } else if(value !==this.loginForm.pass){
         callback(new Error('两次密码输入不一致'))
       } else {
         callback()
@@ -75,59 +69,82 @@ export default {
         callback()
       }
     }
-    const validate4Code = (rule, value, callback) => {
-      if (value.length ==0 ) {
-        callback(new Error('请输入正确的验证码'))
-      } else {
-        callback()
-      }
+    const validateEmail =(rule, value, callback) => {
+      checkedEmail({email:value}).then( res => {
+        if(res.code == "0003"){
+          callback(new Error("邮箱已被注册"))
+        }else{
+          callback()
+        }
+        
+      })
+      
     }
+      
     return {
       loginForm: {
-        username: '',
-        password: '',
-        repassword:'',
-        phone:'',
-        verificationCode:''
+        account:'',
+        userName: '',
+        pass: '',
+        repass:'',
+        tel:'',
+        email:'',
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePass }],
-        repassword: [{ required: true, trigger: 'blur', validator: validateRePass }],
-        phone: [{ required: true, trigger: 'blur', validator: validatePhone }],
-        verificationCode: [{ required: true, trigger: 'blur', validator: validate4Code }]
+        userName: [
+          { required: true, trigger: 'blur', message:"请输入用户名" },
+          { min: 2, max:20, message: '长度在 2 到 20 个字符', trigger: 'blur' }],
+        pass: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 6, max:12, message: '长度在 6 到 12 个字符', trigger: 'blur' }
+        ],
+        repass: [
+            { required: true, trigger: 'blur', validator: validateRePass }
+          ],
+        email:[
+          { required: true, message: '请输入邮箱地址', trigger: 'blur'},
+          { type:'email', message: '请输入正确的邮箱地址', trigger: 'blur'},
+          { trigger: 'blur', validator: validateEmail }
+
+        ]
       },
       loading: false,
       pwdType: 'password',
+      rePwdType:'password',
       countDownValue:60,
       verifiy:false
     }
   },
   methods: {
-    showPwd() {
-      if (this.pwdType === 'password') {
-        this.pwdType = ''
-      } else {
-        this.pwdType = 'password'
+    showPwd(val) {
+      if(val == 0){
+        if (this.pwdType === 'password') {
+          this.pwdType = ''
+        } else {
+          this.pwdType = 'password'
+        }
       }
+      if(val == 1){
+        if (this.rePwdType === 'password') {
+          this.rePwdType = ''
+        } else {
+          this.rePwdType = 'password'
+        }
+      }
+     
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('Login', this.loginForm).then((res) => {
-            //  this.loading = false
-            // this.$router.push({ path: '/' })
-            console.log(res)
-            this.loading = false
-            if(res){
-               this.$router.push({ path: '/' })
-              
-            }else{
-               this.$message('用户名或密码错误！');
-            }
-            
-          }).catch(() => {
+          this.loginForm.account = this.loginForm.email
+          registerUser(this.loginForm).then((res) => {
+            this.$alert('注册成功！请您到邮箱里激活该帐号！', '标题名称', {
+              confirmButtonText: '确定',
+              callback: action => {
+                this.$emit("rebackPage")
+              }
+            });
             this.loading = false
           })
         } else {
@@ -158,8 +175,12 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss">
 .register-container{
-  padding: 8% 20%;
   background-color: rgb(241, 243, 245);
+  background-image: url('../../../../assets/registerBg.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  height: 100%;
+  padding: 40px 0;
   .show-pwd {
     position: absolute;
     right: 10px;
@@ -170,7 +191,8 @@ export default {
   }
   form.el-form{
     background-color: #fff;
-    padding: 10% 26%;
+    margin: 0 20%;
+    padding: 20px 15%;
   }
  }
 </style>

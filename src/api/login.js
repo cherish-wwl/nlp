@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import qs from 'qs'
 export function login(username, password) {
-  console.log(username)
+  // console.log(username)
   return request({
     url: '/sso/login',
     method: 'post',
@@ -26,3 +26,21 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function registerUser(params) {
+  return request({
+    url: '/user/regist',
+    method: 'post',
+    params
+  })
+}
+
+export function checkedEmail(params) {
+  return request({
+    url: '/user/checkEmail',
+    method: 'post',
+    params
+  })
+}
+
+

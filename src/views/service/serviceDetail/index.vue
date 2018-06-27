@@ -1,13 +1,13 @@
 <template>
   <div class="serviceDetail-container">
     <el-row class='service_info'>
-      <img class='service_bg_img' :src="service_bg_img"/>
+      <img class='service_bg_img' :src="service_bg_img" onerror="this.src='/static/sevice_banner_default.jpg';return false;"/>
       <div class='title_desc'>
         <div class="title_content">
           <h2 class="font36 nomargin"> <span class="font20">{{ service_type_name }}&nbsp;/</span>&nbsp;{{ service_title }} </h2>
           <p class="font18" :title="service_desc"> {{ service_desc | subStringNoMore3line}} </p>
           <div>
-            <!-- <el-button type="primary"  class="font16">立即使用</el-button> -->
+            <el-button type="primary"  class="font16" @click.native="jumpPage({name:'register',params: { serviceId:  1}})">立即使用</el-button>
             <el-button  class="font16" @click.native="jumpPage({path:'/services/techDocument/'+serviceId})">技术文档</el-button>
           </div>
         </div>
@@ -48,7 +48,7 @@ export default {
       featureData: {},
       sceneData: {},
       type:'',
-      service_bg_img:require("../../../assets/sevice_details/u536.jpg"),
+      service_bg_img:'',
     }
   },
   components: {
@@ -78,7 +78,7 @@ export default {
       getServiceTypeNameById(params).then(res =>{
         this.service_type_name = res.data.classifyName
          if (res.data.img != "null" && res.data.img && res.data.img != null){
-           this.service_bg_img = '/static/services/service_list/'+ res.data.img
+           this.service_bg_img = res.data.img
          }
         
       })

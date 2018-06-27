@@ -5,7 +5,7 @@
 // @import './sidebar.scss';
 @import './header.scss';
 @import './css-animate.scss';
-@import './console.scss';
+
 body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -187,4 +187,11 @@ li {
   .boolean { color: blue; }
   .null { color: magenta; }
   .key { color: red; }
+}
+
+
+.zc-advice-icon-btn-title{
+  border: 1px solid #000 !important;
+  font-size: 16px !important;
+  color: #000 !important;
 }

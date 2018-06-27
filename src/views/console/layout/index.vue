@@ -1,5 +1,5 @@
 <template>
-  <el-container class="app-wrapper">
+  <el-container class="app-wrapper console-container">
     <header-panel @login="login" class="header-container">></header-panel>
     <el-container>
       <aside-panel></aside-panel>

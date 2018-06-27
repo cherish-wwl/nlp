@@ -32,3 +32,13 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+
+// router.beforeEach((to, from, next) => {
+//   console.log("+++++++++++++++++++++++++++++++++")
+//   console.log(from)
+//   if(from.name == "register"){
+
+//   }else{
+//     next()
+//   }
+// })

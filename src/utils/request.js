@@ -30,7 +30,7 @@ service.interceptors.response.use(
   * code为非20000是抛错 可结合自己业务进行修改
   */
     const res = response.data
-    if (res.code !== "0000") {
+    if (res.code !== "0000" && res.code !== "0003") {
       Message({
         message: res.message,
         type: 'error',

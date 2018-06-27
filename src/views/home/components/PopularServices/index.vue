@@ -79,9 +79,9 @@
       },
       linkServiceDetialPage(item){
         console.log(item)
-        if(item.forwardType == "014002"){//小牛-详情介绍页
+        if(item.forwardType == "017002"){//定制详情页面
           this.$router.push({name:item.innerUrl})
-        }else if(item.forwardType == "014003"){//跳转外部url
+        }else if(item.forwardType == "017003"){//跳转外部url
           window.open(item.innerUrl,'_blank')
           return
         }else{//通用详情页

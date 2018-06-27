@@ -71,17 +71,17 @@
       </el-menu-item>
       {{token}}
       <div class="rightPanel">
-        <el-menu-item index='controlPanel' class='controlPanel' @click="jumpToConsole">
+        <!-- <el-menu-item index='controlPanel' class='controlPanel' @click="jumpToConsole">
           控制台
-        </el-menu-item>
-        <el-menu-item index='login' class='loginItem' v-if="!isLogin">
+        </el-menu-item> -->
+        <!-- <el-menu-item index='login' class='loginItem' v-if="!isLogin">
           登录
         </el-menu-item>
         <el-submenu index="userInfo" class="userInfoItem" v-if="isLogin">
           <template slot="title">{{userName}}</template>
           <el-menu-item index="userInfo-1">个人中心</el-menu-item>
           <el-menu-item index="userInfo-2" @click="logout">退出</el-menu-item>
-        </el-submenu>
+        </el-submenu> -->
      </div>      
     </el-menu>
    </el-header>

@@ -7,11 +7,16 @@
       text-color="#fff"
       active-text-color="#fff">
       <el-menu-item index='0'>
-        <router-link :to="{name:'home'}"><img src='../../../../assets/cnlp_logo2.png'/></router-link>
+        <router-link :to="{name:'home'}"><img src='../../../../assets/cnlp_logo.png'/></router-link>
       </el-menu-item>
       <div class="loginDiv">
+        <a @click="rebackPage"> >返回上一页 </a>
+      </div> 
+      <!--
+      <div class="loginDiv">
         已有帐号，<a @click="handleSelect">立即登录</a>
-      </div>
+      </div> -->
+
     </el-menu>
     
    </el-header>
@@ -30,6 +35,9 @@
     methods: {
       handleSelect () {
         this.$emit('login', true);
+      },
+      rebackPage () {
+        this.$emit("rebackPage")
       }
     }
   }
