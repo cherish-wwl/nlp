@@ -302,9 +302,9 @@ export default {
       // 跳转到详情页
       console.log("---------------跳转到详情页--------------------")
       console.log("id:"+item.id)
-      if(item.forwardType == "017002"){//定制详情页面
+      if(item.forwardType == "014002"){//定制详情页面
         this.$router.push({name:item.innerUrl})
-      }else if(item.forwardType == "017003"){//跳转外部url
+      }else if(item.forwardType == "014003"){//跳转外部url
         window.open(item.innerUrl,'_blank')
         return
       }else{//通用详情页

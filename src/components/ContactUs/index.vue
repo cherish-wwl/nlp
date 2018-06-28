@@ -136,12 +136,13 @@ export default {
           padding: 0px 5px;
           height: 30px;
           line-height: 30px;
-          display: none;
+          opacity: 0;
+          // animation: opacity 500s ;
         }
         &:hover{
           box-shadow: rgba(15, 66, 76, 0.35) 0px 0px 24px 0px;
           .activeBox{
-            display: block;
+            opacity: 1;
           }
           .svg-icon{
             animation:rotating 1.2s linear infinite

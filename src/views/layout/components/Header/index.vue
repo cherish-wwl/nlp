@@ -45,7 +45,7 @@
           <el-row>
             <el-col class="dataSetItem" :span="12" v-for="child in dataSetList" :key="child.id">
               <el-col :span="8" class="item-left"  @click.native="linkSolutionPage(child)" > 
-                <img :src="'static/solution/'+child.solutionIcon" onerror="this.src='/static/default.png'"/>
+                <img :src="child.solutionIcon" onerror="this.src='/static/default.png'"/>
               </el-col>
               <el-col :span="16" class="item-right">           
                   <label>

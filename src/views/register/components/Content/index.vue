@@ -43,6 +43,7 @@
 <script>
 import { isvalidUsername , isPhoneAvailable} from '@/utils/validate'
 import { registerUser, checkedEmail } from "@/api/login"
+import md5 from 'js-md5';
 export default {
   
   data() {
@@ -138,6 +139,8 @@ export default {
         if (valid) {
           this.loading = true
           this.loginForm.account = this.loginForm.email
+          this.loginForm.pass = md5(this.loginForm.pass)
+          this.loginForm.repass = md5(this.loginForm.repass)
           registerUser(this.loginForm).then((res) => {
             this.$alert('注册成功！请您到邮箱里激活该帐号！', '标题名称', {
               confirmButtonText: '确定',
