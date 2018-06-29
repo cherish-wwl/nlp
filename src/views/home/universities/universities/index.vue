@@ -43,7 +43,7 @@
             </div>
             <div class="info-line">
               <h3 class="font18 specialistName"><span class="dot"></span>{{item.groupName}}</h3>
-              <p class="font14 specialistDesrc height90">{{ item.groupDesc | subStringNoMore3line}}<p>
+              <p class="font14 specialistDesrc height90">{{ item.groupBriefIntroduction | subStringNoMore3line}}<p>
               <div class="text_right"><a>>查看详情</a></div>
             </div>
             
@@ -79,7 +79,7 @@
               </p> -->
           </div>
           <div class="item1-content">
-            <article class="dispaly-content">
+            <article class="dispaly-content" v-html="listData.groupDesc">
               {{listData.groupDesc}}
             </article>
           </div>

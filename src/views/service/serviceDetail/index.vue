@@ -4,7 +4,13 @@
       <img class='service_bg_img' :src="service_bg_img" onerror="this.src='/static/sevice_banner_default.jpg';return false;"/>
       <div class='title_desc'>
         <div class="title_content">
-          <h2 class="font36 nomargin"> <span class="font20">{{ service_type_name }}&nbsp;/</span>&nbsp;{{ service_title }} </h2>
+          <h2 class="font36 nomargin"> 
+            <span class="font20 service_type_name" @click="linkServiceListPage">
+              {{ service_type_name }}
+            </span>    
+            <span class="font20">&nbsp; / &nbsp;</span>
+            {{ service_title }}
+          </h2>
           <p class="font18" :title="service_desc"> {{ service_desc | subStringNoMore3line}} </p>
           <div>
             <el-button type="primary"  class="font16" @click.native="jumpPage({name:'register',params: { serviceId:  1}})">立即使用</el-button>
@@ -35,11 +41,13 @@
 import { getServiceDetails, getServiceTypeNameById } from '@/api/serviceLists'
 import { subStringNoMore3line } from '@/utils/index.js'
 import { TechnicalFeatures, FunctionalEmbodiment, ApplicationScene2 } from '@/views/service/serviceDetail/components'
+import Cookies from 'js-cookie'
 export default {
    data (){
     return { 
       service_title: '',
       service_type_name:'',
+      service_type_id:"",
       service_desc: '', 
       serviceId: '',
       serviceType: '',
@@ -86,8 +94,15 @@ export default {
   },
   methods:{
     jumpPage(params){
-      this.$router.push(params)
-    }
+      let routeData = this.$router.resolve(params)
+      window.open(routeData.href, "_blank")
+    },
+    linkServiceListPage () {
+      Cookies.set("service_id",this.service_type_id)
+      //  this.$router.push({name: 'serviceLists', params: { service_id: id }})
+      this.$router.push({name: 'serviceLists',params:{ randomValue: Math.random().toString(36).substr(2) }})
+      console.log(Cookies.get("service_id"))
+    },
   }
 }
 </script>
@@ -113,6 +128,12 @@ export default {
       right: 20%;
       bottom: 0;
       top: 0
+    }
+    .service_type_name{
+      cursor: pointer;
+      &:hover{
+        text-decoration: underline;
+      }
     }
   }
   .font01{

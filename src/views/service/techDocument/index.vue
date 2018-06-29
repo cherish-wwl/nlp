@@ -8,11 +8,8 @@
         <el-row class="font26">
           <h3>简介：</h3>
         </el-row>
-        <el-row class="font18">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hi,您好,欢迎使用神州泰岳自然语言深度处理API服务。
-        </el-row>
-        <el-row class="font18">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;云服务器BCC(Baldu Cloud Compute)是处理能力可弹性伸缩的计算服务。管理方式比物理服务器更简单高效,可根据您的业务需要创建释放任意多台云服务器实例，提升运维效率。为用户快速部署应用构建稳定可靠的基础，降低网络规模计算的难度，使用用户更专注于核心业务创新。且无需花费时间和金钱来购买及维护托管虚拟机的硬件，有效率低IT成本。
+        <el-row class="font18" >
+          <article v-html="techDocmentGlobalDesrc"></article>
         </el-row>
         <br>
       </div>
@@ -99,6 +96,7 @@
 import { techDocument } from '@/api/techDocument'
 import { getServiceDetails } from '@/api/serviceLists'
 import { syntaxHighlight } from '@/utils/index'
+import { getCommonData } from "@/api/localData"
 export default {
   data () {
     return {
@@ -108,7 +106,8 @@ export default {
       tableData2:null,
       backexample:{},
       bodyexample:{},
-      classtype:'001'
+      classtype:'001',
+      techDocmentGlobalDesrc:""
     }
   },
   methods:{ 
@@ -119,8 +118,16 @@ export default {
             this.data = res.data
             this.tableData1 = res.data.requestPara
             this.tableData2 = res.data.responsePara
-            this.backexample = syntaxHighlight(JSON.parse(res.data.backexample))
-            this.bodyexample = syntaxHighlight(JSON.parse(res.data.bodyexample))
+            let backexample = res.data.backexample
+            let bodyexample = res.data.bodyexample
+            if( bodyexample && bodyexample != "" ){
+              // console.log("bodyexample"+this.disposeData(bodyexample))
+              this.bodyexample = this.disposeData(bodyexample) 
+            }
+            if(backexample && backexample != ""){
+              this.backexample = this.disposeData(backexample) 
+            }         
+            
           }
         })
         getServiceDetails(this.$route.params.serviceId).then(response =>{
@@ -131,10 +138,33 @@ export default {
         })
       }
       
+    },
+    disposeData(str){
+      if(typeof str == 'string'){
+        try {
+            var obj=JSON.parse(str.trim('"').toString());
+            if(typeof obj == 'object' && obj ){
+              return syntaxHighlight(obj);
+            }else{
+                return '"'+str+'"';
+            }
+
+        } catch(e) {
+            console.log('error：'+str+'!!!'+e);
+            return '"'+str+'"';
+        }
+      }
     }
   },
   mounted() {
     this.init();
+    getCommonData().then( res=>{
+      if((typeof res) == "object"){
+          this.techDocmentGlobalDesrc = res.techDocmentGlobalDesrc
+        }else{
+          console.log("未加载到数据")
+        }
+    })
   }
 }
 </script>

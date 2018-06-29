@@ -46,6 +46,7 @@
 </template>
 <script>
 import { getCountBytype } from "@/api/home"
+import { getAboutUsData } from "@/api/localData"
 export default {
   data () {
     return{
@@ -295,12 +296,27 @@ export default {
     
 
     // -------------------加载关于平台数据---------------------
-    getCountBytype().then(res => {
-        this.endNum1 = res.data.professorCount
-        this.endNum2 = res.data.serviceCount
-        this.endNum3 = res.data.academyCount
-        this.endNum4 = res.data.solutionCount
+    getAboutUsData().then(response => {
+      console.log(response)
+       if((typeof response) == "object"){
+         if(response.needCustomAboutUs == true){
+            this.endNum1 = response.AboutUsNum.professorCount
+            this.endNum2 = response.AboutUsNum.serviceCount
+            this.endNum3 = response.AboutUsNum.academyCount
+            this.endNum4 = response.AboutUsNum.solutionCount
+         }else{
+            getCountBytype().then(res => {
+              this.endNum1 = res.data.professorCount
+              this.endNum2 = res.data.serviceCount
+              this.endNum3 = res.data.academyCount
+              this.endNum4 = res.data.solutionCount
+            })
+           }
+        }else{
+          console.log("未加载到数据")
+        }
     })
+   
 
   }
 

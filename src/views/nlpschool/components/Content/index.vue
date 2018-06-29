@@ -8,12 +8,12 @@
         <div class="classroomDiv">
           <div class="title_line">
             <img class="icon" src="../../../../assets/nlpschool/u4538.png">
-            <span class="font28 c333">NLP小学院</span>
+            <span class="font28 c333">NLP小课堂</span>
             <!-- <span class="seeMore c999 font14"> 更多 >></span> -->
           </div>
           <el-row class="lesson_content" :gutter="30">
             <el-col  :span="8" v-for=" item in lessonData" :key="item.id">
-              <div  class="lesson-item" @click="jumpDetails()">
+              <div  class="lesson-item" @click="jumpDetails(item)">
                 <img class="lesson-img" :src="item.img" />
                 <p class="c333 font16">
                   <img class="icon2" src="../../../../assets/nlpschool/u4327.png">
@@ -62,18 +62,21 @@
       <el-col :span="6" class="lecturer">
         <div class="title_line">
             <img class="icon" src="../../../../assets/nlpschool/u4542.png">
-            <span class="font28 c333">金牌讲师</span>
+            <span class="font28 c333">学院介绍</span>
             <!-- <span class="seeMore c999 font14"> 更多 >></span> -->
         </div>
         <el-row class="lecturer_content">
-          <el-col v-for="item in lecturerData" :key="item.id" class="lecturer_item line-animate-content">
+          <el-col class="lecturer_item line-animate-content">
+            <p class="font14 c333">{{lecturerData}}</p>
+          </el-col>
+          <!-- <el-col v-for="item in lecturerData" :key="item.id" class="lecturer_item line-animate-content">
             <div class="line"></div>
             <img :src="item.img">
             <div class="lecturer_info">
               <p>{{ item.name }}</p>
               <p>{{ item.academy }}</p>
             </div>
-          </el-col>
+          </el-col> -->
         </el-row>
       </el-col>
     </el-row>
@@ -84,85 +87,34 @@
   </div>
 </template>
 <script> 
-
+import { getNlpSchoolData } from '@/api/localData.js'
 export default {
   data (){
     return {
-      lessonData:[
-        {
-          id:1,
-          img:require("../../../../assets/nlpschool/u4319.jpg"),
-          title:"自然语言处理的定义和发展",
-          type:"免费",
-          auther:"任宁"
-        },
-        {
-          id:2,
-          img:require("../../../../assets/nlpschool/u4335.jpg"),
-          title:"规则与统计之争",
-          type:"免费",
-          auther:"任宁"
-        },
-        {
-          id:3,
-          img:require("../../../../assets/nlpschool/xkjc.jpg"),
-          title:"自然语言处理的学科基础",
-          type:"免费",
-          auther:"任宁"
-        },
-        {
-          id:4,
-          img:require("../../../../assets/nlpschool/yjfx.jpg"),
-          title:"自然语言处理的研究方向",
-          type:"免费",
-          auther:"任宁"
-        },
-        {
-          id:5,
-          img:require("../../../../assets/nlpschool/hyjh.jpg"),
-          title:"自然语言处理与传统行业的结合",
-          type:"免费",
-          auther:"任宁"
-        },
-        {
-          id:6,
-          img:require("../../../../assets/nlpschool/znfz.jpg"),
-          title:"人工智能的发展",
-          type:"免费",
-          auther:"任宁"
-        },
-      ],
-      lecturerData:[
-        // {
-        //   id:1,
-        //   name:"吴云鹤",
-        //   academy:"人工智能研究院",
-        //   img:require("../../../../assets/nlpschool/u4581.png")
-        // },
-        {
-          id:2,
-          name:"任宁",
-          academy:"人工智能研究院",
-          img:require("../../../../assets/nlpschool/u4644.png")
-        },
-        // {
-        //   id:3,
-        //   name:"吴云鹤",
-        //   academy:"人工智能研究院",
-        //   img:require("../../../../assets/nlpschool/u4581.png")
-        // },
-      ]
+      lessonData:[],
+      lecturerData:''
     }
   },
   methods:{
-    jumpDetails () {
+    jumpDetails (item) {
       let routeData = this.$router.resolve({
         path: "/nlpDetails",
-        query: {}
+        query: {id:item.id}
       });
       window.open(routeData.href, "_blank");
 			
     }
+  },
+  mounted () {
+    getNlpSchoolData().then(res => {
+      console.log(res)
+      if((typeof res) == "object"){
+        this.lessonData = res.lessonData
+        this.lecturerData = res.lecturerData
+      }else{
+        console.log("未加载到数据")
+      }
+    })
   }
 }
 </script>
@@ -223,6 +175,10 @@ export default {
         margin: 12px 0;
         img{
           width: 35%;
+        }
+        p{
+          padding: 18px 16px;
+          text-indent: 28px;
         }
         .lecturer_info{
           margin: auto 0;

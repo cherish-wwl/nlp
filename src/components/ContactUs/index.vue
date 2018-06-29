@@ -5,7 +5,9 @@
         <div class="iconBox">
           <svg-icon icon-class="phone"></svg-icon>
         </div>
-        <span class="activeBox">010-57973555</span>
+        <div class="activeBoxDiv">
+          <span class="activeBox">010-57973555</span>
+        </div>
       </div>
       <div class="phone-line linebox" >
         <span id="phone-line">
@@ -17,7 +19,10 @@
         <div class="iconBox">
           <svg-icon icon-class="email"></svg-icon>
         </div>
-        <span class="activeBox">China-NLP@ultrapower.com.cn</span>
+        <div class="activeBoxDiv">
+          <span class="activeBox">China-NLP@ultrapower.com.cn</span>
+        </div>
+        
       </div>
       <div class="email-line linebox" >
         <span id="email-line">         
@@ -59,10 +64,8 @@ export default {
 
       function changeColor(time,activeColor){
         let changbg = setTimeout( ()=>{
-          var bgcolor = bg3()
-          
+          var bgcolor = bg3()    
           if( time < 5 ){
-            console.log("------------------"+time)
             if(time == 1 || time == 3){
               dom.style.backgroundColor = activeColor
             }else{
@@ -71,7 +74,6 @@ export default {
             time = time + 1
             changeColor(time,activeColor)
           }else{
-            console.log("---------------结束---")
             clearTimeout(changbg) 
           }
          
@@ -115,6 +117,12 @@ export default {
             color: #fff;
           }
         }
+        .activeBoxDiv{
+          position: absolute;
+          top: 15px;
+          right: 34px;
+          padding-right: 34px;
+        }
         .activeBox{
           box-shadow: rgba(107, 113, 114, 0.15) 0px 2px 4px 0px;
           // border: 1px solid rgb(235, 239, 240);
@@ -126,9 +134,6 @@ export default {
           margin: 0px;
           text-align: right;
           background: rgb(255, 255, 255);
-          position: absolute;
-          top: 15px;
-          right: 70px;
           text-overflow: ellipsis;
           white-space: nowrap;
           word-break: normal;
@@ -136,13 +141,16 @@ export default {
           padding: 0px 5px;
           height: 30px;
           line-height: 30px;
-          opacity: 0;
+          display: none;
           // animation: opacity 500s ;
+          &:hover{
+             display: block;
+          }
         }
         &:hover{
           box-shadow: rgba(15, 66, 76, 0.35) 0px 0px 24px 0px;
           .activeBox{
-            opacity: 1;
+             display: block;
           }
           .svg-icon{
             animation:rotating 1.2s linear infinite

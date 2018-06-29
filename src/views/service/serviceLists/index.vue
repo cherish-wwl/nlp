@@ -52,7 +52,9 @@
         <el-row class='service_list' >
             <el-row class='item' v-for="item in thridList" :key='item.id'>
               <el-col :span='8' class='item_img' style="width:330px;"> 
-                <img :src=" item.serviceIcon" onerror="this.src='/static/default.png';return false;" />
+                <img 
+                  :src="item.serviceIcon && item.serviceIcon != '' ?item.serviceIcon:'/static/default.png'" 
+                  onerror="this.src='/static/default.png';return false;" />
               </el-col>
               <el-col :span='16' class='item_info'>
                 <h3>
@@ -74,9 +76,11 @@
                     查看详情
                   </el-button>
                 </div>
+                <div class="freeImgBox" v-if="item.isCharge">
+                  <img  src="/static/services/freeapi_icon01.png"/>
+                </div>
               </el-col>
-            </el-row>
-           
+            </el-row> 
         </el-row>
         <el-row class="text_center">
           <el-pagination
@@ -118,7 +122,8 @@ export default {
       countSort:false,
       timeSort:false,
       sortType:1,
-      storeDate:this.$store.state
+      storeDate:this.$store.state,
+      showFreeCharge:''
     }
   },
  
@@ -204,6 +209,12 @@ export default {
     // 初始化
     init (){
       console.log("初始化"+Cookies.get("service_id"))
+      console.log(this.$route.query.isCharge)
+      if( this.$route.query.isCharge && this.$route.query.isCharge == "false"){
+        this.showFreeCharge = "012001"
+      }else{
+        this.showFreeCharge = ""
+      }
       if(Cookies.get("service_id")){
         this.currentServiceId = Cookies.get("service_id") 
       }
@@ -258,6 +269,7 @@ export default {
         useNum:"",//使用次数排序
         relTime:"",//接入时间排序
       }
+      
       if(this.sortType == 1){//使用次数排序
         if(this.countSort){
           data.useNum = 1//1:倒序排列  2：升序排列
@@ -274,6 +286,9 @@ export default {
         data.useNum = ""
       }
       console.log(this.sortType)
+      if( this.showFreeCharge == "012001"){
+        data.isCharge = this.showFreeCharge
+      }
       console.log(data)
       getThirdServiceList(data).then(responce =>{
         this.thridList = responce.data 
@@ -424,6 +439,11 @@ export default {
         }
         img{
           max-width:100%;
+        }
+        .freeImgBox {
+          position: absolute;
+          top: 0;
+          right: 0;
         }
         .item_info{
           padding-left: 10px;

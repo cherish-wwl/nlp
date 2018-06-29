@@ -1,11 +1,11 @@
 <template>
     <el-carousel height="470px" :interval="5000">
       <el-carousel-item v-for="(item, index) in datalist" :key="index">
-        <template v-if="item.link == ''">
+        <template v-if="item.link == ''" >
           <img :src='item.imgUrl' class="carouse-img"/>
         </template>
         <template v-else>
-          <a :href="item.link" target="_blank" class="carouse-img">
+          <a  @click="jumpPage(item)" target="_blank" class="carouse-img">
             <img :src='item.imgUrl' class="carouse-img"/>
           </a>
         </template>
@@ -14,35 +14,45 @@
 </template>
 
 <script>
+  import Cookies from 'js-cookie'
+  import { getCarouselData } from "@/api/localData"
   export default {
     data() {
       return {
-        datalist:[{
-            imgUrl:require('../../../../assets/home/banner_1.jpg'),
-            link:''
-          },{
-            imgUrl:require('../../../../assets/home/banner_03.jpg'),
-            link:''
-          },{
-            imgUrl:require('../../../../assets/home/banner_4.jpg'),
-            link:''
-          },{
-              imgUrl:require('../../../../assets/home/banner_5.jpg'),
-              link:''
-          },{
-              imgUrl:require('../../../../assets/home/banner_3.jpg'),
-              link:'http://www.cipsc.org.cn'
-          }],
-       }
+        datalist:[]
+      }
      },
     computed:{
     
     },
     methods: {
-      
+      jumpPage(item){
+        
+        if(item.link == "serviceList"){
+          Cookies.set("service_id","001001")
+          this.$router.push({
+            name: 'serviceLists',
+            params:{ 
+              randomValue: Math.random().toString(36).substr(2),
+            },
+            query:{
+              isCharge:"false"
+            }
+          })
+          console.log(Cookies.get("service_id"))
+        }else{
+          window.open(item.link,"_blank")
+        }
+      }
     },
     mounted () {
-      
+      getCarouselData().then( res=>{
+        if((typeof res) == "object"){
+          this.datalist = res.datalist
+        }else{
+          console.log("未加载到数据")
+        }
+      })
     }
   }
 </script>

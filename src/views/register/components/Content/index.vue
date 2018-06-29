@@ -177,13 +177,20 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
+html, body, #app{
+  height: 100%;
+}
 .register-container{
   background-color: rgb(241, 243, 245);
   background-image: url('../../../../assets/registerBg.jpg');
   background-repeat: no-repeat;
   background-size: 100%;
   height: 100%;
-  padding: 40px 0;
+  // padding: 40px 0;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   .show-pwd {
     position: absolute;
     right: 10px;
@@ -194,8 +201,15 @@ export default {
   }
   form.el-form{
     background-color: #fff;
-    margin: 0 20%;
-    padding: 20px 15%;
+    // margin: 0 20%;
+    // padding: 20px 15%;
+    position: absolute;
+    // width: 50%;
+    // margin: auto;
+    padding: 20px 100px;
+    .el-input__inner{
+      width: 400px;
+    }
   }
  }
 </style>

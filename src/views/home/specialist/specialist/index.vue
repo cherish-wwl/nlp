@@ -53,7 +53,7 @@
         <el-col :span="18">
           <article class="bordertopbule specialist-item1">
               <p class="font14">
-                <img  class="portrait" :src="specialistData!=null&&specialistData.imageUrl?specialistData.imageUrl:'/static/default.png'"  onerror="this.src='/static/default.png'" align="left"/>
+                <img  class="portrait" :src=" specialistData != null && specialistData.imageUrl?specialistData.imageUrl:'/static/default.png'"  onerror="this.src='/static/default.png'" align="left"/>
                 <span class="font20 specialistName"> {{specialistData.professorName}}</span>
                 <span class="specialistDesrc">{{specialistData.professorDesc}}</span>
               </p>
@@ -65,8 +65,8 @@
               @click="currentNode = index">{{ item.relateType }}</span>
             </div>
             <br />
-            <div class="dispaly-content"  >
-              <template v-if="specialistData.relateList && specialistData.relateList[currentNode].relateDesc">
+            <div class="dispaly-content">
+              <template v-if="specialistData.relateList && specialistData.relateList[currentNode] && specialistData.relateList[currentNode].relateDesc">
                 <article v-html="specialistData.relateList[currentNode].relateDesc">
                   {{specialistData.relateList[currentNode].relateDesc}}
                 </article>

@@ -318,6 +318,10 @@ import { getToken, getUserName } from '@/utils/auth'
             cursor: pointer;
           }
         }
+        p{
+          height: 80px;
+          overflow: hidden;
+        }
       
     }
   }
