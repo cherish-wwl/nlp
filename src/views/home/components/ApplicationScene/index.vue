@@ -41,10 +41,10 @@
         currentIndex: 0,
         datalist:[],
         imglist:[
-          require('../../../../assets/home/xinwen01.jpg'),
-          require('../../../../assets/home/kefu01.jpg'),
+          // require('../../../../assets/home/xinwen01.jpg'),
+          // require('../../../../assets/home/kefu01.jpg'),
           // require('../../../../assets/home/sifa01.jpg'),
-          require('../../../../assets/home/wenben01.jpg'),
+          // require('../../../../assets/home/wenben01.jpg'),
           // require('../../../../assets/home/yiliao01.jpg'),
         ],
       }

@@ -43,7 +43,7 @@ export default {
       let width = dom.offsetWidth
       let height = dom.offsetHeight
       let backgroundColor = dom.style.backgroundColor 
-      console.log(backgroundColor)
+      // console.log(backgroundColor)
 
       document.getElementById("contact-email").style.width = width + "px"
       document.getElementById("contact-email").style.height = height + "px"

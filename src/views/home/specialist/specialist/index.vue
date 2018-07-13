@@ -3,7 +3,7 @@
      <!-- 专家列表页面 -->
     <el-row>
       <div class="back-img">
-        <img  src="../../../../assets/home/specialist/u574.jpg" />
+        <img  src="static/index/bgimg/u574.jpg" />
       </div>
       <div class="dispaly-font">
         <a v-on:click="returnBack">{{title1}}</a> &nbsp;
@@ -122,6 +122,7 @@ export default {
   methods:{
     handleSizeChange(val){
       this.pageSize = val 
+      this.currentPage = 1
       this.init()
     },
     handleCurrentChange(val){

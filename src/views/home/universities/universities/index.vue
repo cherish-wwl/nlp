@@ -3,7 +3,7 @@
      <!-- 合作院校列表页面 -->
     <el-row>
       <div class="back-img">
-        <img  src="../../../../assets/home/specialist/u574.jpg" />
+        <img  src="static/index/bgimg/u574.jpg" />
       </div>
       <div class="dispaly-font">
         <a v-on:click="returnBack">{{title1}}</a> &nbsp;
@@ -56,7 +56,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage"
-            :page-sizes="[10, 20, 30, 40]"
+            :page-sizes="[9, 18, 27, 36]"
             :page-size="pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total='totalsNums'>
@@ -124,7 +124,7 @@ export default {
       listData:[],
       currentIndex:'',
       currentPage:1,
-      pageSize:10,
+      pageSize:9,
       totalsNums:0,
     }
   },
@@ -136,6 +136,7 @@ export default {
   methods:{
     handleSizeChange(val){
       this.pageSize = val 
+      this.currentPage = 1
       this.getGroupList()
     },
     handleCurrentChange(val){
@@ -190,6 +191,7 @@ export default {
     // 查询
     querySearch(){
       console.log("查询："+this.currentUnversite +"++++++++" +this.search_word)
+      this.currentPage = 1
       this.getGroupList()
     }
   },
@@ -263,8 +265,10 @@ export default {
       .img-line{
         // width: 280px;
         height: 200px;
+        display: flex;
         img{
-          height: 100%;
+          height: fit-content;
+          margin: auto;
           max-width: 100%;
         }
       }
@@ -310,7 +314,7 @@ export default {
         align-items: center;
         padding:15px;
         img{
-          height: 200px;
+          max-height: 200px;
           max-width: 100%;
         }
         .item1-name{

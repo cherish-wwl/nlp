@@ -32,10 +32,10 @@ export const constantRouterMap = [
     path: '/',
     component: Layout,
     redirect: '/home',
-    name: 'home',
     hidden: true,
     children: [{
         path: 'home',
+        name: 'home',
         component: () => import('@/views/home/index')
       },
       {
@@ -88,10 +88,10 @@ export const constantRouterMap = [
   {
     path: '/dataSet',
     component: Layout,
-    redirect: '/dataSet/index',
+    redirect: '/dataSet',
     children: [
       {
-        path: 'index',
+        path: '',
         // path:'index',
         name: 'dataset',
         component: () => import('@/views/dataset/index'),

@@ -1,12 +1,12 @@
 <template>
   <el-row class='banner_info'>
-      <img class='banner_bg_img' :src='titleData.bgimg'/>
+      <img class='batar_img' :src='titleData.bgimg'/>
       <div class='banner_desc'>
         <div class="left">
           <img class='banner_bg_img' :src='titleData.img'/>
         </div>
         <div class="right">
-          <h2> {{ titleData.title }} </h2>
+          <h2 class="size"> {{ titleData.title }} </h2>
           <p class="smaller"> {{ titleData.desrc }} </p>
         </div>
         <div v-if="titleData.url && titleData.url != ''">
@@ -30,6 +30,10 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .banner_info{
   position: relative;
+  .batar_img{
+    min-height: 222px;
+    max-height: 230px
+  }
   img.banner_bg_img{
     width: 100%;
   }
@@ -47,13 +51,23 @@ export default {
     .left{
       border-right: 1px solid #fff;
       // display: inline-block;
-      width: 30%;
+      width: 24%;
+      padding: 10px
       // margin: auto;
     }
     .right{
       padding-left: 15px;
-      width: 67%;
+      width: 76%;
       // display: inline-block;
+
+      .size{
+        font-size: 32px;
+        margin: 12px 0;
+      }
+      .smaller{
+        font-size: 14px;
+        line-height: 20px;
+      }
     }
   }
 }

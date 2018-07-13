@@ -24,7 +24,7 @@
         </el-col>
       </el-row>
     </div>
-    <el-footer>Copyright 版权©所有神州泰岳 UltraPower 京ICP备15013685号-1</el-footer>
+    <el-footer>{{ footerText }}</el-footer>
     <login :visible="loginVisible" @login="login"></login>
 		<contact-us></contact-us>
   </div>
@@ -40,6 +40,7 @@ require('vue-video-player/src/custom-theme.css')
 vue.use(VideoPlayer)
 import ContactUs from "@/components/ContactUs"
 import { getNlpSchoolData } from '@/api/localData.js'
+import { getCommonData } from "@/api/localData"
 export default {
   name: 'layout',
   components: {
@@ -53,6 +54,7 @@ export default {
       title:'',
       titleDetail:'',
       // videoPath:'./static/nlpschool/ai-school-1.flv',
+      footerText:"Copyright 版权©所有神州泰岳 UltraPower 京ICP备15013685号-1",
       introduction:'',
 			playerOptions : {
         playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
@@ -112,7 +114,11 @@ export default {
       }
       this.playerOptions.sources.push(currentVideo)
     })
-    
+    getCommonData().then( res => {
+      if(res.footerText){
+        this.footerText = res.footerText
+      }
+    })
   },
   methods:{
     login(msg){

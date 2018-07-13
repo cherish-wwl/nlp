@@ -11,7 +11,7 @@
       <el-menu-item index='0'>
         <router-link :to="{name:'home'}"><img src='../../../../assets/cnlp_logo.png'/></router-link>
       </el-menu-item>
-      <el-submenu index="1" @click.native="isHidePanel(1)">
+      <el-submenu index="1" @click.native="isHidePanel(1,$event)">
           <template slot="title">产品服务 </template>
           <el-menu-item index="1-1" style="display:none;"></el-menu-item>
           <div class="sub-meun-panel">
@@ -37,7 +37,7 @@
             </el-row>
           </div>
       </el-submenu>
-      <el-submenu index="2" @click.native="isHidePanel(2)">
+      <el-submenu index="2" @click.native="isHidePanel(2,$event)">
         <template slot="title">解决方案 </template>
         <el-menu-item index="2-1" style="display:none;"></el-menu-item>
         <div class="sub-meun-panel" >
@@ -114,14 +114,18 @@ import { getToken, getUserName } from '@/utils/auth'
     },
     methods: {
       // 点击判断是否显示下载框
-      isHidePanel(index){
-        var displayValue = document.querySelectorAll(".el-menu")[index].style.display
-        if(displayValue == "none"){
-          document.querySelectorAll(".el-menu")[index].style.display = ""
-        }else{
-          document.querySelectorAll(".el-menu")[index].style.display = "none"
+      isHidePanel(index,e){
+        if(e){
+          if(e.target.className == "el-submenu__title"){
+            var displayValue = document.querySelectorAll(".el-menu")[index].style.display
+            if(displayValue == "none"){
+              document.querySelectorAll(".el-menu")[index].style.display = ""
+            }else{
+              document.querySelectorAll(".el-menu")[index].style.display = "none"
+            }
+          }
         }
-      
+        
       },
       // 切换菜单事件
       handleSelect (key, keyPath) {
@@ -134,8 +138,10 @@ import { getToken, getUserName } from '@/utils/auth'
       jumpPage(params){
         this.activeIndex = "0"
         if(params.name == "innovation"|| params.name == "nlpschool"){
-          console.log(window.location.origin )
-          window.open(window.location.origin + '#/'+params.name,"_blank")
+          let routeData = this.$router.resolve({
+            name: params.name,
+          });
+          window.open(routeData.href, "_blank");
         }else{
           this.$router.push(params)
         }
@@ -143,9 +149,9 @@ import { getToken, getUserName } from '@/utils/auth'
       },
       // 跳转到服务详情页面 
       linkServiceListPage (id) {
-        console.log("跳转到服务详情页面")
-         document.querySelectorAll(".el-menu")[1].style.display="none" 
-        console.log(document.querySelectorAll(".el-menu")[1].style.display)
+        // console.log("跳转到服务详情页面")
+        document.querySelectorAll(".el-menu")[1].style.display="none" 
+        // console.log(document.querySelectorAll(".el-menu")[1].style.display)
         this.isHidePanel(1)
         this.activeIndex = "1-1"
         Cookies.set("service_id",id)
@@ -161,7 +167,8 @@ import { getToken, getUserName } from '@/utils/auth'
         }else{
           window.open(item.solutionUrl)
         }
-        
+        document.querySelectorAll(".el-menu")[2].style.display="none"
+        this.isHidePanel(2)
       },
       //查询
       querySearch(){
@@ -223,7 +230,7 @@ import { getToken, getUserName } from '@/utils/auth'
         this.initMeunList(response.data)
         this.serviceMeunList = response.data
         this.originalMeunList = response.data
-        console.log(this.serviceMeunList)
+        // console.log(this.serviceMeunList)
       })
       getSolutionList().then(response => {
         this.dataSetList = response.data

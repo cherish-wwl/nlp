@@ -142,7 +142,7 @@ export default {
           this.loginForm.pass = md5(this.loginForm.pass)
           this.loginForm.repass = md5(this.loginForm.repass)
           registerUser(this.loginForm).then((res) => {
-            this.$alert('注册成功！请您到邮箱里激活该帐号！', '标题名称', {
+            this.$alert('注册成功！请您到邮箱里激活该帐号！', '提示：', {
               confirmButtonText: '确定',
               callback: action => {
                 this.$emit("rebackPage")
