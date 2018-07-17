@@ -3,20 +3,17 @@
     <header-panel @login="login" class="header-container"></header-panel>
     <content-panel></content-panel>
     <el-footer>{{ footerText }}</el-footer>
-    <login :visible="loginVisible" @login="login"></login>
   </div>
 </template>
 
 <script>
 import { HeaderPanel, ContentPanel } from '@/views/innovation/components'
-import Login from '@/components/Login'// 登录组件
 import { getCommonData } from "@/api/localData"
 export default {
   name: 'layout',
   components: {
     HeaderPanel,
     ContentPanel,
-    Login
   },
   data () {
     return{

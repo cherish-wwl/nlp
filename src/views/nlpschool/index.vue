@@ -3,14 +3,12 @@
     <header-panel @login="login" class="header-container"></header-panel>
     <content-panel></content-panel>
     <el-footer>{{ footerText }}</el-footer>
-    <login :visible="loginVisible" @login="login"></login>
     <contact-us></contact-us>
   </div>
 </template>
 
 <script>
 import { HeaderPanel, ContentPanel } from '@/views/nlpschool/components'
-import Login from '@/components/Login'// 登录组件
 import ContactUs from "@/components/ContactUs"
 import { getCommonData } from "@/api/localData"
 export default {
@@ -18,7 +16,6 @@ export default {
   components: {
     HeaderPanel,
     ContentPanel,
-    Login,
     ContactUs
   },
   data () {

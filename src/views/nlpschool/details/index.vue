@@ -25,14 +25,12 @@
       </el-row>
     </div>
     <el-footer>{{ footerText }}</el-footer>
-    <login :visible="loginVisible" @login="login"></login>
 		<contact-us></contact-us>
   </div>
 </template>
 
 <script>
 import HeaderPanel from '@/views/nlpschool/components/Header'
-import Login from '@/components/Login'// 登录组件
 import vue from 'vue'
 import VideoPlayer from 'vue-video-player'
 require('video.js/dist/video-js.css')
@@ -45,7 +43,6 @@ export default {
   name: 'layout',
   components: {
     HeaderPanel,
-    Login,
 		ContactUs
   },
   data () {

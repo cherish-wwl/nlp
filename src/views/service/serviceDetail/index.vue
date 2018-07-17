@@ -13,7 +13,7 @@
           </h2>
           <p class="font18" :title="service_desc"> {{ service_desc | subStringNoMore3line}} </p>
           <div>
-            <el-button type="primary"  class="font16" @click.native="jumpPage({name:'register',params: { serviceId:  1}})">立即使用</el-button>
+            <el-button type="primary"  class="font16" @click.native="userNow">立即使用</el-button>
             <el-button  class="font16" @click.native="jumpPage({path:'/services/techDocument/'+serviceId})">技术文档</el-button>
           </div>
         </div>
@@ -42,6 +42,8 @@ import { getServiceDetails, getServiceTypeNameById } from '@/api/serviceLists'
 import { subStringNoMore3line } from '@/utils/index.js'
 import { TechnicalFeatures, FunctionalEmbodiment, ApplicationScene2 } from '@/views/service/serviceDetail/components'
 import Cookies from 'js-cookie'
+import { getToken } from '@/utils/auth'
+import { getCommonData } from "@/api/localData"
 export default {
    data (){
     return { 
@@ -57,6 +59,7 @@ export default {
       sceneData: {},
       type:'',
       service_bg_img:'',
+      commonData:''
     }
   },
   components: {
@@ -90,6 +93,9 @@ export default {
          }
         
       })
+      getCommonData().then( res => {
+        this.commonData = res
+      })
     })
   },
   methods:{
@@ -103,6 +109,24 @@ export default {
       this.$router.push({name: 'serviceLists',params:{ randomValue: Math.random().toString(36).substr(2) }})
       console.log(Cookies.get("service_id"))
     },
+    // 立即使用
+    userNow (){
+      // 已登录
+      if(getToken() != "" && getToken()){
+        window.open( this.commonData.consoleUrl,"_blank") 
+      }else{
+        // 未登录询问是否去登录
+        // this.$confirm('是否去登录?', '提示', {
+        //   confirmButtonText: '确定',
+        //   cancelButtonText: '取消',
+        //   type: 'info'
+        // }).then(() => {
+         window.open( this.commonData.userManageBaseUrL,"_blank") 
+        // }).catch(() => {
+                
+        // });
+      }
+    }
   }
 }
 </script>

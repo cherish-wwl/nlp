@@ -75,7 +75,7 @@ import { scrollAnimation } from '@/utils/scrollAnimation.js'
 
   .loginDiv{
     color: #9f9696;
-    display: inline-block;
+    // display: inline-block;
     float: right;
     line-height: 50px;
     font-size: small;

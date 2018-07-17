@@ -3,20 +3,16 @@
     <top-festival></top-festival>
     <header-panel @login="login" class="header-container"></header-panel>
     <div class="main-container">
-      <!-- <navbar></navbar> -->
       <app-main></app-main>
     </div>
-    <el-footer>{{ footerText }}</el-footer>
-    <login :visible="loginVisible" @login="login"></login>
+    <el-footer v-html="footerText">{{ footerText }}</el-footer>
     <contact-us></contact-us>
-
   </div>
 </template>
 
 <script>
 import { HeaderPanel, AppMain } from '@/views/layout/components'
 import  ContactUs from '@/components/ContactUs' //悬浮框联系我们组件
-import Login from '@/components/Login'// 登录组件
 import TopFestival from "@/components/TopFestival"  //顶层悬浮广告
 import { getCommonData } from "@/api/localData"
 export default {
@@ -24,14 +20,13 @@ export default {
   components: {
     HeaderPanel,
     AppMain,
-    Login,
     ContactUs,
     TopFestival
   },
   data () {
     return{
       loginVisible:false,
-      footerText:"Copyright 版权©所有神州泰岳 UltraPower 京ICP备15013685号-1"
+      footerText:"Copyright 版权©所有神州泰岳 UltraPower 京ICP备18006379号-1"
     }
   },
   computed: {

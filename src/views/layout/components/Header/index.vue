@@ -69,17 +69,14 @@
       <el-menu-item index='5' @click="jumpPage({name:'nlpschool'})">
         NLP学院
       </el-menu-item>
-      {{token}}
       <div class="rightPanel">
-        <!-- <el-menu-item index='controlPanel' class='controlPanel' @click="jumpToConsole">
+        <el-menu-item index='login' class='loginItem'>
           控制台
-        </el-menu-item> -->
-        <!-- <el-menu-item index='login' class='loginItem' v-if="!isLogin">
-          登录
         </el-menu-item>
-        <el-submenu index="userInfo" class="userInfoItem" v-if="isLogin">
-          <template slot="title">{{userName}}</template>
-          <el-menu-item index="userInfo-1">个人中心</el-menu-item>
+        <!-- <el-submenu index="userInfo" class="userInfoItem" v-if="isLogin">
+          <template slot="title">{{ userName }}</template>
+          <el-menu-item index="userInfo-1" @click="jumpToConsole">控制台</el-menu-item>
+          <el-menu-item index="userInfo-1" @click="jumpToConsoleMine">个人中心</el-menu-item>
           <el-menu-item index="userInfo-2" @click="logout">退出</el-menu-item>
         </el-submenu> -->
      </div>      
@@ -89,11 +86,13 @@
 
 <script>
 import { getMenus } from '@/api/header'
-
+import store from '../../../../store'
+import { Message } from 'element-ui'
 import Cookies from 'js-cookie'
 import { getSolutionList } from '@/api/solutions'
 import { subStringNoMore3line } from '@/utils/index'
-import { getToken, getUserName } from '@/utils/auth'
+import { getToken } from '@/utils/auth'
+import { getCommonData } from "@/api/localData"
   export default {
     data() {
       return {
@@ -103,8 +102,9 @@ import { getToken, getUserName } from '@/utils/auth'
         searchKey:'',
         searchSetDataKey:'',
         dataSetList:[],
-        userName:getUserName(),
-        isLogin:false
+        userName:"",
+        isLogin:false,
+        commonData:""
       }
     },
     filters:{
@@ -113,6 +113,18 @@ import { getToken, getUserName } from '@/utils/auth'
       }
     },
     methods: {
+       // 切换菜单事件
+      handleSelect (key, keyPath) {
+        console.log(key, keyPath);
+        if(key == "login"){
+          console.log( getToken())
+          if(!this.isLogin){
+            window.location.href = this.commonData.userManageBaseUrL
+          }else{
+            window.location.href = this.commonData.consoleUrl 
+          }   
+        }
+      },
       // 点击判断是否显示下载框
       isHidePanel(index,e){
         if(e){
@@ -126,13 +138,6 @@ import { getToken, getUserName } from '@/utils/auth'
           }
         }
         
-      },
-      // 切换菜单事件
-      handleSelect (key, keyPath) {
-        console.log(key, keyPath);
-        if(key == "login"){
-          this.$emit('login', true);
-        }
       },
       // 跳转页面
       jumpPage(params){
@@ -206,23 +211,14 @@ import { getToken, getUserName } from '@/utils/auth'
           location.reload() // 为了重新实例化vue-router对象 避免bug
         })
       },
+      // 跳转到管控台
       jumpToConsole(){
-        if(this.isLogin){
-          // window.open(window.location.origin + '#/console',"_blank")
-          this.$router.push({name:'consoleService'})
-        }else{
-          this.$emit('login', true);
-        }
-      }
-    },
-    computed: {
-      token() {
-          if(getToken() != "" && getToken()){
-            this.isLogin = true
-            this.userName = getUserName()
-          }
-        return this.$store.state.user.token
-      }
+        window.location.href = this.commonData.consoleUrl
+      },
+      // 跳转到个人中心
+       jumpToConsoleMine(){
+         window.location.href = this.commonData.consoleUrl +"/#/mine"
+       }
     },
     mounted () {
       // 初始化
@@ -235,9 +231,21 @@ import { getToken, getUserName } from '@/utils/auth'
       getSolutionList().then(response => {
         this.dataSetList = response.data
       })
+      getCommonData().then( res => {
+        this.commonData = res
+      })
       // console.log(getToken())
       if(getToken() != "" && getToken()){
-        this.isLogin = true
+        store.dispatch('GetInfo').then(res => { // 拉取用户信息
+          console.log("拉取用户信息")
+          console.log(res)
+          this.isLogin = true
+          this.userName = res.data.userName
+        }).catch(() => {
+          this.isLogin = false
+        })
+      }else{
+        this.isLogin = false
       }
       
     }
